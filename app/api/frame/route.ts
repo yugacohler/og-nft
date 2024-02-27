@@ -54,7 +54,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   let minted = false;
   let error = null;
 
-  // TODO: Add button to link to minted NFT
   // TODO: Change limit to 25K
   // TODO: Rotate private key
 
@@ -79,6 +78,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           },
         ],
         image: `${NEXT_PUBLIC_URL}/thanks.webp`,
+        postUrl: `${NEXT_PUBLIC_URL}/api/minted`,
       }),
     );
   } else {
@@ -101,10 +101,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       getFrameHtmlResponse({
         buttons: [
           {
-            label: 'Thanks for minting!',
+            label: 'Thank you for minting!',
           },
         ],
         image: `${NEXT_PUBLIC_URL}/thanks.webp`,
+        postUrl: `${NEXT_PUBLIC_URL}/api/minted`,
       }),
     );
   }
