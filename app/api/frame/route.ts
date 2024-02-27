@@ -56,6 +56,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // TODO: Add button to link to minted NFT
   // TODO: Change limit to 25K
+  // TODO: Rotate private key
 
   try {
     minted = !!(await publicClient.readContract({
