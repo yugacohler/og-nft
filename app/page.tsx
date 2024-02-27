@@ -28,11 +28,11 @@ const frameMetadata = getFrameMetadata({
 });
 
 export const metadata: Metadata = {
-  title: 'zizzamia.xyz',
-  description: 'LFG',
+  title: 'Yuga OG NFT',
+  description: 'Yuga OG NFT',
   openGraph: {
-    title: 'zizzamia.xyz',
-    description: 'LFG',
+    title: 'Yuga OG NFT',
+    description: 'Yuga OG NFT',
     images: [`${NEXT_PUBLIC_URL}/park-1.png`],
   },
   other: {
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1>zizzamia.xyz</h1>
+      <h1>Yuga OG NFT</h1>
     </>
   );
 }
