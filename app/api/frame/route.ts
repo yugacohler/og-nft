@@ -26,7 +26,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return getErrorResponse('No account address found');
   }
 
-  if (!message?.following) {
+  if (!message?.following || message?.interactor.fid == 2099) {
     return new NextResponse(
       getFrameHtmlResponse({
         buttons: [
