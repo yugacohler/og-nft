@@ -76,7 +76,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
             action: 'link',
             label: 'Already minted!',
             target:
-              'https://testnets.opensea.io/assets/base-sepolia/0x92dffae5776b8b6fd076e9166b3e5736f4408f84/' +
+              'https://testnets.opensea.io/assets/base-sepolia/0x1c2Cb49689417889f94120bc7A80BdfbbF4A180B/' +
               tokenID,
           },
         ],
@@ -106,7 +106,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
             action: 'link',
             label: 'View NFT!',
             target:
-              'https://testnets.opensea.io/assets/base-sepolia/0x92dffae5776b8b6fd076e9166b3e5736f4408f84/' +
+              'https://testnets.opensea.io/assets/base-sepolia/0x1c2Cb49689417889f94120bc7A80BdfbbF4A180B/' +
               tokenID,
           },
         ],
