@@ -26,18 +26,18 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return getErrorResponse('No account address found');
   }
 
-  // if (!message?.following) {
-  //   return new NextResponse(
-  //     getFrameHtmlResponse({
-  //       buttons: [
-  //         {
-  //           label: 'Please follow yuga.eth first!',
-  //         },
-  //       ],
-  //       image: `${NEXT_PUBLIC_URL}/like.webp`,
-  //     }),
-  //   );
-  // }
+  if (!message?.following) {
+    return new NextResponse(
+      getFrameHtmlResponse({
+        buttons: [
+          {
+            label: 'Please follow yuga.eth first!',
+          },
+        ],
+        image: `${NEXT_PUBLIC_URL}/like.webp`,
+      }),
+    );
+  }
 
   const nftOwnerAccount = privateKeyToAccount(WALLET_PRIVATE_KEY as `0x${string}`);
   const nftOwnerClient = createWalletClient({
