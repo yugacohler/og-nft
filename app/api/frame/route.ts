@@ -22,6 +22,23 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     accountAddress = message.interactor.verified_accounts[0];
   }
 
+  if (!accountAddress) {
+    return getErrorResponse('No account address found');
+  }
+
+  if (!message?.following) {
+    return new NextResponse(
+      getFrameHtmlResponse({
+        buttons: [
+          {
+            label: 'Please follow yuga.eth first!',
+          },
+        ],
+        image: `${NEXT_PUBLIC_URL}/like.webp`,
+      }),
+    );
+  }
+
   const nftOwnerAccount = privateKeyToAccount(WALLET_PRIVATE_KEY as `0x${string}`);
   const nftOwnerClient = createWalletClient({
     account: nftOwnerAccount,
@@ -37,7 +54,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   let minted = false;
   let error = null;
 
-  // TODO: Check like and follow
   // TODO: Add button to link to minted NFT
   // TODO: Change limit to 25K
 
@@ -50,16 +66,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }));
   } catch (err) {
     console.error(err);
-    return new NextResponse(
-      getFrameHtmlResponse({
-        buttons: [
-          {
-            label: 'Error: ' + (err as Error).message,
-          },
-        ],
-        image: `${NEXT_PUBLIC_URL}/intro.webp`,
-      }),
-    );
+    return getErrorResponse((err as Error).message);
   }
 
   if (minted) {
@@ -86,16 +93,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       await nftOwnerClient.writeContract(request);
     } catch (err) {
       console.error(err);
-      return new NextResponse(
-        getFrameHtmlResponse({
-          buttons: [
-            {
-              label: 'Error: ' + (err as Error).message,
-            },
-          ],
-          image: `${NEXT_PUBLIC_URL}/intro.webp`,
-        }),
-      );
+      return getErrorResponse((err as Error).message);
     }
 
     return new NextResponse(
@@ -109,6 +107,19 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       }),
     );
   }
+}
+
+function getErrorResponse(label: string): NextResponse {
+  return new NextResponse(
+    getFrameHtmlResponse({
+      buttons: [
+        {
+          label: 'Error: ' + label,
+        },
+      ],
+      image: `${NEXT_PUBLIC_URL}/intro.webp`,
+    }),
+  );
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
