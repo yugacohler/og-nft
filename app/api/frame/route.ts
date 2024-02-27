@@ -26,12 +26,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return getErrorResponse('No account address found');
   }
 
-  if (!message?.following && message?.interactor.fid != 2099) {
+  if ((!message?.following || !message.liked) && message?.interactor.fid != 2099) {
     return new NextResponse(
       getFrameHtmlResponse({
         buttons: [
           {
-            label: 'Please follow yuga.eth first!',
+            label: 'Please follow yuga.eth and like message first!',
           },
         ],
         image: `${NEXT_PUBLIC_URL}/like.webp`,
