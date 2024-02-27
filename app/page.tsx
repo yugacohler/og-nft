@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1>Yuga OG NFT</h1>
+      <h1>Yuga OG NFT!</h1>
     </>
   );
 }
