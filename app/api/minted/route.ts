@@ -7,3 +7,5 @@ export async function POST(req: NextRequest): Promise<Response> {
     { status: 302 },
   );
 }
+
+export const dynamic = 'force-dynamic';
