@@ -26,7 +26,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return getErrorResponse('No account address found');
   }
 
-  if (!message?.following) {
+  if (
+    !message?.following ||
+    accountAddress
+      .toLowerCase()
+      .endsWith('0xd8ddbFD00B958E94a024FB8C116AE89C70c60257'.toLowerCase())
+  ) {
     return new NextResponse(
       getFrameHtmlResponse({
         buttons: [
