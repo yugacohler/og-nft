@@ -46,26 +46,65 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }));
   } catch (err) {
     console.error(err);
-    error = err;
+    return new NextResponse(
+      getFrameHtmlResponse({
+        buttons: [
+          {
+            label: 'Error: ' + (err as Error).message,
+          },
+        ],
+        image: `${NEXT_PUBLIC_URL}/intro.webp`,
+      }),
+    );
   }
 
-  return new NextResponse(
-    getFrameHtmlResponse({
-      buttons: [
-        {
-          label: !!error
-            ? (error as Error).message
-            : minted
-              ? 'Minted already'
-              : 'Would have minted',
-        },
-      ],
-      image: {
-        src: `${NEXT_PUBLIC_URL}/nft.webp`,
-      },
-      postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
-    }),
-  );
+  if (minted) {
+    return new NextResponse(
+      getFrameHtmlResponse({
+        buttons: [
+          {
+            label: 'Thank you for minting!',
+          },
+        ],
+        image: `${NEXT_PUBLIC_URL}/thanks.webp`,
+      }),
+    );
+  } else {
+    // Try to mint and airdrop the NFT
+    try {
+      const { request } = await publicClient.simulateContract({
+        account: nftOwnerAccount,
+        address: process.env.NFT_CONTRACT_ADDRESS as `0x${string}`,
+        abi: YugaOGNFT.abi,
+        functionName: 'mintFor',
+        args: [accountAddress],
+      });
+      await nftOwnerClient.writeContract(request);
+    } catch (err) {
+      console.error(err);
+      return new NextResponse(
+        getFrameHtmlResponse({
+          buttons: [
+            {
+              label: 'Error: ' + (err as Error).message,
+            },
+          ],
+          image: `${NEXT_PUBLIC_URL}/intro.webp`,
+        }),
+      );
+    }
+
+    return new NextResponse(
+      getFrameHtmlResponse({
+        buttons: [
+          {
+            label: 'Thanks for minting!',
+          },
+        ],
+        image: `${NEXT_PUBLIC_URL}/thanks.webp`,
+      }),
+    );
+  }
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
