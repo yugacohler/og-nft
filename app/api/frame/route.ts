@@ -74,11 +74,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       getFrameHtmlResponse({
         buttons: [
           {
-            label: 'Thank you for minting!',
+            action: 'link',
+            label: 'Already minted!',
+            target:
+              'https://testnets.opensea.io/assets/base-sepolia/0x92dffae5776b8b6fd076e9166b3e5736f4408f84/1',
           },
         ],
         image: `${NEXT_PUBLIC_URL}/thanks.webp`,
-        postUrl: `${NEXT_PUBLIC_URL}/api/minted`,
       }),
     );
   } else {
@@ -101,11 +103,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       getFrameHtmlResponse({
         buttons: [
           {
-            label: 'Thank you for minting!',
+            action: 'link',
+            label: 'View NFT!',
+            target:
+              'https://testnets.opensea.io/assets/base-sepolia/0x92dffae5776b8b6fd076e9166b3e5736f4408f84/1',
           },
         ],
         image: `${NEXT_PUBLIC_URL}/thanks.webp`,
-        postUrl: `${NEXT_PUBLIC_URL}/api/minted`,
       }),
     );
   }
