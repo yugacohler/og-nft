@@ -51,25 +51,24 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     transport: http(PROVIDER_URL as string),
   });
 
-  let minted = false;
+  let tokenID = 0;
   let error = null;
 
   // TODO: Change limit to 25K
-  // TODO: Rotate private key
 
   try {
-    minted = !!(await publicClient.readContract({
+    tokenID = (await publicClient.readContract({
       address: process.env.NFT_CONTRACT_ADDRESS as `0x${string}`,
       abi: YugaOGNFT.abi,
       functionName: 'minted',
       args: [accountAddress],
-    }));
+    })) as number;
   } catch (err) {
     console.error(err);
     return getErrorResponse((err as Error).message);
   }
 
-  if (minted) {
+  if (tokenID > 0) {
     return new NextResponse(
       getFrameHtmlResponse({
         buttons: [
@@ -77,7 +76,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
             action: 'link',
             label: 'Already minted!',
             target:
-              'https://testnets.opensea.io/assets/base-sepolia/0x92dffae5776b8b6fd076e9166b3e5736f4408f84/1',
+              'https://testnets.opensea.io/assets/base-sepolia/0x92dffae5776b8b6fd076e9166b3e5736f4408f84/' +
+              tokenID,
           },
         ],
         image: `${NEXT_PUBLIC_URL}/thanks.webp`,
@@ -106,7 +106,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
             action: 'link',
             label: 'View NFT!',
             target:
-              'https://testnets.opensea.io/assets/base-sepolia/0x92dffae5776b8b6fd076e9166b3e5736f4408f84/1',
+              'https://testnets.opensea.io/assets/base-sepolia/0x92dffae5776b8b6fd076e9166b3e5736f4408f84/' +
+              tokenID,
           },
         ],
         image: `${NEXT_PUBLIC_URL}/thanks.webp`,
