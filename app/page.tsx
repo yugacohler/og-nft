@@ -13,17 +13,17 @@ const frameMetadata = getFrameMetadata({
     aspectRatio: '1:1',
   },
   input: {
-    text: 'Mint your Yuga OG NFT!',
+    text: 'Mint your yuga.eth NFT!',
   },
   postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
 });
 
 export const metadata: Metadata = {
-  title: 'Yuga OG NFT',
-  description: 'Yuga OG NFT',
+  title: 'yuga.eth NFT',
+  description: 'yuga.eth NFT',
   openGraph: {
-    title: 'Yuga OG NFT',
-    description: 'Yuga OG NFT',
+    title: 'yuga.eth NFT',
+    description: 'yuga.eth NFT',
     images: [`${NEXT_PUBLIC_URL}/intro.webp`],
   },
   other: {
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1>Yuga OG NFT!</h1>
+      <h1>yuga.eth NFT!</h1>
     </>
   );
 }
